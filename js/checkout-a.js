@@ -99,9 +99,7 @@
       retryTimer = setTimeout(function () {
         if (active === request) fallback.hidden = false;
       }, 1500);
-      try {
-        if (window.fbq) window.fbq('track', 'CompleteRegistration');
-      } catch (error) {}
+      // CompleteRegistration is managed by the existing Meta Event Setup button rule.
       try {
         window.location.assign(url);
       } catch (error) {

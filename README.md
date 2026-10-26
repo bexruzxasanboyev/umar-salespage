@@ -32,7 +32,7 @@ To'g'ri to'ldirilgan forma `js/main.js` dagi mavjud bot backendiga yuboriladi. P
 
 Backend muvaffaqiyatli javob bersa, Telegram tugmasiga foydalanuvchining shaxsiy bot havolasi o'rnatiladi. Xato yuz bersa yoki so'rov to'rt soniyada yakunlanmasa, oddiy bot havolasi ko'rsatiladi. Telegram foydalanuvchi tugmani bosganda ochiladi; avtomatik yo'naltirish yo'q.
 
-Mavjud Pixel sahifa ochilganda `PageView`, xarid tugmasi bosilganda `InitiateCheckout`, forma yakuniy ekraniga o'tganda `CompleteRegistration` hodisalarini yuboradi. Ikkala variant umumiy skriptlardan foydalanadi.
+Sayt kodi sahifa ochilganda `PageView`, xarid formasi ochilganda `InitiateCheckout` hodisalarini yuboradi. `CompleteRegistration` targetolog Meta Event Setup Tool'da o'rnatgan mavjud “DARSLARIMNI OCHISH” tugmasi qoidasi orqali yuboriladi; takroriy sanashni bartaraf qilish uchun ikkala sahifaning kodidan shu event chaqiruvi olib tashlangan. Meta qoidasi tugma bosilishini sanaydi, shu sabab forma validatsiyasi yoki backend muvaffaqiyatini tasdiqlamaydi.
 
 ## Mahalliy ishga tushirish
 

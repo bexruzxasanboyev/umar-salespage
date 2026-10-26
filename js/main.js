@@ -126,7 +126,7 @@ function sendToSheet(name, phone){
 function showDone(){
   document.getElementById('formView').style.display='none';
   document.getElementById('doneView').classList.add('on');
-  if(window.fbq) fbq('track','CompleteRegistration');
+  // CompleteRegistration is managed by the existing Meta Event Setup button rule.
 }
 
 function getCookie(n){
