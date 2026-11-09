@@ -63,6 +63,8 @@ h2{font-size:clamp(26px,6.2vw,44px);margin-bottom:14px}
 .hero h1{font-size:clamp(34px,9.6vw,76px);margin-bottom:18px}
 .hero .sub{font-size:clamp(17px,4.4vw,21px);color:var(--muted);max-width:680px;margin-bottom:26px}
 .hero .sub b{color:var(--ink)}
+.hero-sub-mobile{display:none}
+.mobile-title-break{display:none}
 .vsl{position:relative;border-radius:var(--r);overflow:hidden;background:var(--ink);margin-bottom:24px;box-shadow:0 18px 40px -22px rgba(0,0,0,.45)}
 .vsl.r169{aspect-ratio:16/9}.vsl.r916{aspect-ratio:9/16;max-width:420px}
 .vsl iframe,.vsl video{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
@@ -218,6 +220,20 @@ h2{font-size:clamp(26px,6.2vw,44px);margin-bottom:14px}
   .sheet{border-radius:24px}
   .sticky{display:none}
 }
+@media(max-width:759px){
+  .hero h1,.hero .sub{text-align:center}
+  .hero h1{font-size:clamp(20px,6.8vw,34px);line-height:1.12;letter-spacing:-.045em}
+  .hero h1 .hl{white-space:nowrap}
+  .mobile-title-break{display:block}
+  .hero .sub{max-width:100%;margin-left:auto;margin-right:auto;font-size:clamp(12px,3.6vw,15px);line-height:1.4}
+  .hero-sub-desktop{display:none}
+  .hero-sub-mobile{display:block}
+}
+@media(max-width:359px){
+  .hero h1{font-size:clamp(18px,6.4vw,23px);letter-spacing:-.05em}
+  .hero .sub{font-size:11px;line-height:1.35}
+  .hero-sub-mobile{white-space:nowrap}
+}
 @media(prefers-reduced-motion:reduce){.ticker .t,.badge i{animation:none}}
 
 :focus-visible{outline:3px solid var(--red);outline-offset:3px}
@@ -285,9 +301,9 @@ h2{font-size:clamp(26px,6.2vw,44px);margin-bottom:14px}
     <!-- SARLAVHA. Muqobil variantlar (A/B uchun):
          B: "KAMERASIZ. AKTYORSIZ. STUDIYASIZ. FAQAT SIZ VA SUN'IY INTELLEKT."
          C: "BITTA RASMDAN — KINO. TELEFONINGIZDA." -->
-    <h1>AI ORQALI VIDEO YASASHNI <span class="hl">1 KUNDA O'RGANING!</span></h1>
+    <h1>AI ORQALI<br class="mobile-title-break"> VIDEO YASASHNI<br class="mobile-title-break"> <span class="hl">1 KUNDA O'RGANING!</span></h1>
 
-    <p class="sub">Umar Creates mini kursi — 15 ta amaliy dars. Jami 2 soat.<br>Narxi — 99,000 so'm. Hozir to'lov. Hozir dostup.</p>
+    <p class="sub"><span class="hero-sub-desktop">Umar Creates mini kursi — 15 ta amaliy dars. Jami 2 soat.<br>Narxi — 99,000 so'm. Hozir to'lov. Hozir dostup.</span><span class="hero-sub-mobile">Umar Creates mini kursi · 15 dars · 2 soat<br>99,000 so'm · to'lov hozir · dostup darhol</span></p>
 
     <div class="vsl r169" id="vsl">
       <video data-col="6a733d7b10058ad63da04059" data-id="6a809bdca1a122c6282a34a6" data-poster-w="1280" playsinline webkit-playsinline preload="none"></video>
