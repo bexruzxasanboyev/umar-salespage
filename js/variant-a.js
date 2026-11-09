@@ -1,6 +1,49 @@
 // Variant presentation. Shared scripts still own checkout, tracking and video playback.
 (function () {
   var marquee = document.querySelector('.mq');
+  var heroCta = document.getElementById('heroCta');
+  var sticky = document.getElementById('sticky');
+
+  document.querySelectorAll('[data-open]').forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      openModal('cta');
+    });
+  });
+
+  var heroVideo = document.querySelector('.vsl');
+  var heroPlayer = heroVideo && heroVideo.querySelector('video');
+  var heroPlayButton = heroVideo && heroVideo.querySelector('.vsl_play');
+  if (heroPlayer && heroPlayButton) {
+    heroVideo.addEventListener('click', function (event) {
+      if (heroPlayer.paused) return;
+      event.preventDefault();
+      event.stopPropagation();
+      heroPlayer.pause();
+    }, true);
+    heroPlayer.addEventListener('play', function () {
+      heroPlayer.controls = false;
+      heroPlayButton.hidden = true;
+    });
+  }
+
+  function setupSticky() {
+    if (!heroCta || !sticky) return;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        var entry = entries[0];
+        sticky.classList.toggle('on', !entry.isIntersecting && entry.boundingClientRect.top < 0);
+      }).observe(heroCta);
+    } else {
+      sticky.classList.add('on');
+    }
+  }
+
+  if (!marquee) {
+    setupSticky();
+    return;
+  }
+
   var track = marquee.querySelector('.mqTrack');
   var previews = marquee.querySelectorAll('video');
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -158,20 +201,13 @@
 
   var lessons = document.getElementById('lesWrap');
   var toggle = document.getElementById('lesBtn');
-  toggle.addEventListener('click', function () {
-    var expanded = lessons.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(expanded));
-    toggle.textContent = expanded ? 'Yopish ↑' : "Barcha 15 ta darsni ko'rish ↓";
-  });
-
-  var heroCta = document.getElementById('heroCta');
-  var sticky = document.getElementById('sticky');
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(function (entries) {
-      var entry = entries[0];
-      sticky.classList.toggle('on', !entry.isIntersecting && entry.boundingClientRect.top < 0);
-    }).observe(heroCta);
-  } else {
-    sticky.classList.add('on');
+  if (lessons && toggle) {
+    toggle.addEventListener('click', function () {
+      var expanded = lessons.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(expanded));
+      toggle.textContent = expanded ? 'Yopish ↑' : "Barcha 15 ta darsni ko'rish ↓";
+    });
   }
+
+  setupSticky();
 })();

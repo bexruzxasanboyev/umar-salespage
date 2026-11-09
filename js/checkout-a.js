@@ -21,6 +21,7 @@
     if (previous) {
       clearTimeout(previous.deadline);
       if (previous.controller) previous.controller.abort();
+      if (previous.popup && !previous.finished) previous.popup.close();
     }
     clearTimeout(retryTimer);
     retryTimer = null;
@@ -77,8 +78,13 @@
     var request = {
       controller: window.AbortController ? new AbortController() : null,
       deadline: null,
-      finished: false
+      finished: false,
+      popup: null
     };
+    try {
+      request.popup = window.open('about:blank', '_blank');
+      if (request.popup) request.popup.opener = null;
+    } catch (error) {}
     active = request;
     submit.disabled = true;
     card.hidden = true;
@@ -94,19 +100,24 @@
       request.finished = true;
       clearTimeout(request.deadline);
       link.href = url;
-      status.textContent = 'Telegram ochilmoqda...';
-      // A direct link remains available if an in-app browser blocks the handoff.
+      status.textContent = 'Telegram yangi oynada ochilmoqda...';
+      if (request.popup && !request.popup.closed) {
+        try {
+          request.popup.location.replace(url);
+          request.popup = null;
+        } catch (error) {
+          request.popup.close();
+          request.popup = null;
+          fallback.hidden = false;
+        }
+      } else {
+        request.popup = null;
+        fallback.hidden = false;
+      }
+      // A direct link remains available if the browser blocks the new tab.
       retryTimer = setTimeout(function () {
         if (active === request) fallback.hidden = false;
       }, 1500);
-      // CompleteRegistration is managed by the existing Meta Event Setup button rule.
-      try {
-        window.location.assign(url);
-      } catch (error) {
-        clearTimeout(retryTimer);
-        retryTimer = null;
-        fallback.hidden = false;
-      }
     }
 
     // Finish independently of abort support, and ignore any response arriving late.
@@ -131,7 +142,6 @@
         keepalive: true
       })
         .then(function (response) {
-          if (!response.ok) throw new Error('Lead request failed');
           return response.json();
         })
         .then(function (data) { finish(responseUrl(data)); })
